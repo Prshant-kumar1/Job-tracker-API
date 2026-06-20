@@ -6,10 +6,16 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 from app.config import settings
 
-# SQLite needs this connect_arg when used with multiple threads (as FastAPI does)
-connect_args = {"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {}
+# Render provides PostgreSQL URLs with the legacy "postgres://" scheme.
+# SQLAlchemy 1.4+ requires "postgresql://" so we normalise it here.
+database_url = settings.DATABASE_URL
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
 
-engine = create_engine(settings.DATABASE_URL, connect_args=connect_args)
+# SQLite needs this connect_arg when used with multiple threads (as FastAPI does)
+connect_args = {"check_same_thread": False} if database_url.startswith("sqlite") else {}
+
+engine = create_engine(database_url, connect_args=connect_args)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
