@@ -14,7 +14,12 @@ from app.routers import auth, applications, dashboard, ai
 
 # Create all tables on startup if they don't already exist.
 # For a production app you'd use Alembic migrations instead.
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+    print("Database tables created successfully")
+except Exception as e:
+    print(f"Error creating database tables: {e}")
+    # Continue anyway - tables might already exist
 
 app = FastAPI(
     title="AI Job Tracker API",
