@@ -18,7 +18,7 @@ services:
       # Set this to your frontend's Render URL so CORS is allowed.
       # e.g. https://job-tracker-frontend.onrender.com
       - key: FRONTEND_URL
-        value: https://job-tracker-frontend.onrender.com
+        value: https://job-tracker-frontend-sxro.onrender.com
 
 databases:
   - name: job-tracker-db
