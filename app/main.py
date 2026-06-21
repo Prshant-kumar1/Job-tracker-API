@@ -71,10 +71,21 @@ def root():
 def health_check():
     """Detailed health check including CORS and environment info."""
     import os
+    from sqlalchemy import text
+    
+    db_test = "unknown"
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT 1"))
+            db_test = "connected"
+    except Exception as e:
+        db_test = f"failed: {str(e)[:100]}"
+    
     return {
         "status": "healthy",
         "frontend_url_configured": os.getenv("FRONTEND_URL", "NOT_SET"),
         "allowed_origins": _allowed_origins,
         "database_url_set": bool(os.getenv("DATABASE_URL")),
         "secret_key_set": bool(os.getenv("SECRET_KEY")),
+        "database_connection": db_test,
     }
