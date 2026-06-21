@@ -15,6 +15,10 @@ services:
         fromDatabase:
           name: job-tracker-db
           property: connectionString
+      # Set this to your frontend's Render URL so CORS is allowed.
+      # e.g. https://job-tracker-frontend.onrender.com
+      - key: FRONTEND_URL
+        value: https://job-tracker-frontend.onrender.com
 
 databases:
   - name: job-tracker-db
