@@ -14,7 +14,10 @@ from app.routers import auth, applications, dashboard, ai
 
 # Create all tables on startup if they don't already exist.
 # For a production app you'd use Alembic migrations instead.
+# Drop and recreate tables to fix UUID vs Integer mismatch issue
 try:
+    Base.metadata.drop_all(bind=engine)
+    print("Dropped existing tables")
     Base.metadata.create_all(bind=engine)
     print("Database tables created successfully")
 except Exception as e:
