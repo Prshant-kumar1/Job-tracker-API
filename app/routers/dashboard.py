@@ -38,7 +38,14 @@ def get_dashboard_summary(
     )
     counts = {status_value.value: 0 for status_value in ApplicationStatus}
     for status_value, count in status_rows:
-        counts[status_value.value if hasattr(status_value, "value") else status_value] = count
+        # Handle both Enum objects and string values (PostgreSQL returns strings)
+        if isinstance(status_value, ApplicationStatus):
+            key = status_value.value
+        elif hasattr(status_value, "value"):
+            key = status_value.value
+        else:
+            key = str(status_value)
+        counts[key] = count
 
     recent_applications = (
         base_query.order_by(JobApplication.created_at.desc())
