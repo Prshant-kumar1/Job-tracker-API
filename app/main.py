@@ -60,3 +60,16 @@ def root():
         "message": "AI Job Tracker API is running",
         "docs": "/docs",
     }
+
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    """Detailed health check including CORS and environment info."""
+    import os
+    return {
+        "status": "healthy",
+        "frontend_url_configured": os.getenv("FRONTEND_URL", "NOT_SET"),
+        "allowed_origins": _allowed_origins,
+        "database_url_set": bool(os.getenv("DATABASE_URL")),
+        "secret_key_set": bool(os.getenv("SECRET_KEY")),
+    }
