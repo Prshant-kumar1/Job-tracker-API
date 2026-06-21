@@ -54,7 +54,8 @@ def get_dashboard_summary(
     )
 
     upcoming_followups = (
-        base_query.filter(JobApplication.follow_up_date >= date.today())
+        base_query.filter(JobApplication.follow_up_date != None)
+        .filter(JobApplication.follow_up_date >= date.today())
         .order_by(JobApplication.follow_up_date.asc())
         .all()
     )
