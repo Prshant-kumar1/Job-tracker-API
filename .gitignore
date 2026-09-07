@@ -15,18 +15,6 @@ Smart Job Tracker/htmlcov/
 Smart Job Tracker/.coverage
 Smart Job Tracker/.python-version
 
-# Frontend (job-tracker-frontend)
-job-tracker-frontend/node_modules/
-job-tracker-frontend/dist/
-job-tracker-frontend/.env
-job-tracker-frontend/.env.local
-job-tracker-frontend/.env.*.local
-job-tracker-frontend/*.log
-job-tracker-frontend/npm-debug.log*
-job-tracker-frontend/yarn-debug.log*
-job-tracker-frontend/yarn-error.log*
-job-tracker-frontend/.DS_Store
-
 # IDE
 .vscode/
 .idea/
